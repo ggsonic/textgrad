@@ -32,11 +32,13 @@ class ChatOpenAI(EngineLM, CachedEngine):
         super().__init__(cache_path=cache_path)
 
         self.system_prompt = system_prompt
-        if os.getenv("OPENAI_API_KEY") is None:
-            raise ValueError("Please set the OPENAI_API_KEY environment variable if you'd like to use OpenAI models.")
+        #if os.getenv("OPENAI_API_KEY") is None:
+        #    raise ValueError("Please set the OPENAI_API_KEY environment variable if you'd like to use OpenAI models.")
         
         self.client = OpenAI(
-            api_key=os.getenv("OPENAI_API_KEY"),
+            #api_key=os.getenv("OPENAI_API_KEY"),
+            base_url=kwargs['base_url'],
+            api_key=kwargs['api_key'],
         )
         self.model_string = model_string
 
@@ -60,7 +62,7 @@ class ChatOpenAI(EngineLM, CachedEngine):
             ],
             frequency_penalty=0,
             presence_penalty=0,
-            stop=None,
+            stop="<|eot_id|>",#None,
             temperature=temperature,
             max_tokens=max_tokens,
             top_p=top_p,
@@ -82,7 +84,7 @@ class ChatOpenAI(EngineLM, CachedEngine):
             messages=messages,
             frequency_penalty=0,
             presence_penalty=0,
-            stop=None,
+            stop="<|eot_id|>",#None,
             temperature=temperature,
             max_tokens=max_tokens,
             top_p=top_p,

@@ -31,4 +31,7 @@ def get_engine(engine_name: str, **kwargs) -> EngineLM:
         from .cohere import ChatCohere
         return ChatCohere(model_string=engine_name, **kwargs)
     else:
-        raise ValueError(f"Engine {engine_name} not supported")
+        #default openai style llm api
+        from .openai import ChatOpenAI
+        return ChatOpenAI(model_string=engine_name, **kwargs)
+        #raise ValueError(f"Engine {engine_name} not supported")
